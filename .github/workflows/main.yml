@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  Run_Tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
 
       - name: Run pytest
         run: |
-          docker compose exec -T backend pytest app/tests --maxfail=1 --disable-warnings -q
+          docker compose exec -T backend pytest app/tests -v --maxfail=1 --disable-warnings -q
 
       - name: Shut down services
         if: always()
