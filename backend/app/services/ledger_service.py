@@ -5,8 +5,8 @@ from app.schemas.transaction import TransactionCreate
 
 
 class LedgerService:
-
-    def create_transaction(self, db: Session, data: TransactionCreate) -> Transaction:
+    @staticmethod
+    def create_transaction(db: Session, data: TransactionCreate) -> Transaction:
         if len(data.entries) < 2:
             raise ValueError("Transaction must have at least two entries")
 
