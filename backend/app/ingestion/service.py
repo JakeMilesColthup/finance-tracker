@@ -53,4 +53,7 @@ def ingest_transactions(
             entries=entries
         )
 
-        LedgerService.create_transaction(db=db, data=tx_create)
+        LedgerService.create_transaction(
+            db=db,
+            data=tx_create,
+        )

@@ -27,3 +27,16 @@ def get_balance_sheet(
     db: Session = Depends(get_db)
 ):
     return ReportService.balance_sheet(db)
+
+@router.get("/spending_by_category")
+def spending_by_category(
+    start_date: datetime | None = None,
+    end_date: datetime | None = None,
+    db: Session = Depends(get_db),
+):
+
+    return ReportService.spending_by_category(
+        db,
+        start_date=start_date,
+        end_date=end_date
+    )

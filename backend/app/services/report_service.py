@@ -72,3 +72,31 @@ class ReportService:
             "liabilities": liabilities,
             "equity": assets - liabilities
         }
+    
+    @staticmethod
+    def spending_by_category(db: Session, start_date=None, end_date=None):
+
+        query = (
+            db.query(
+                Account.name,
+                func.sum(Entry.amount).label("total")
+            )
+            .join(Entry, Entry.account_id == Account.id)
+            .join(Transaction, Entry.transaction_id == Transaction.id)
+            .filter(Account.type == AccountType.expense)
+        )
+
+        if start_date:
+            query = query.filter(Transaction.created_at >= start_date)
+
+        if end_date:
+            query = query.filter(Transaction.created_at <= end_date)
+
+        query = query.group_by(Account.name)
+
+        results = query.all()
+
+        return {
+            name: total
+            for name, total in results
+        }

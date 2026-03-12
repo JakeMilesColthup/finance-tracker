@@ -1,5 +1,7 @@
+from datetime import datetime
+from typing import List, Optional
 from pydantic import BaseModel, ConfigDict
-from typing import List
+
 
 
 class EntryCreate(BaseModel):
@@ -9,6 +11,7 @@ class EntryCreate(BaseModel):
 
 class TransactionCreate(BaseModel):
     description: str
+    created_at: Optional[datetime] = None
     entries: List[EntryCreate]
 
 

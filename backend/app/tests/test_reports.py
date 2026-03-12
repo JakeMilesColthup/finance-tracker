@@ -104,3 +104,34 @@ def test_income_statement_date_filter(client):
     assert report["income"] == 0
     assert report["expenses"] == 0
     assert report["net_income"] == 0
+
+def test_spending_by_category(client):
+
+    checking = client.post("/accounts", json={
+        "name": "Checking",
+        "type": "asset"
+    }).json()["id"]
+
+    groceries = client.post("/accounts", json={
+        "name": "Groceries",
+        "type": "expense"
+    }).json()["id"]
+
+    client.post("/accounts", json={
+        "name": "Income",
+        "type": "income"
+    })
+
+    client.post("/transactions", json={
+        "description": "Test",
+        "entries": [
+            {"account_id": checking, "amount": -500},
+            {"account_id": groceries, "amount": 500}
+        ]
+    })
+
+    resp = client.get("/reports/spending_by_category")
+
+    data = resp.json()
+
+    assert data["Groceries"] == 500
