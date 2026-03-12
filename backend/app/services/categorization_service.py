@@ -9,7 +9,11 @@ class CategorizationService:
     @staticmethod
     def categorize(db: Session, description: str) -> Account | None:
 
-        rules = db.query(CategoryRule).all()
+        rules = (
+            db.query(CategoryRule)
+            .order_by(CategoryRule.priority.asc())
+            .all()
+)
 
         desc = description.upper()
 

@@ -1,4 +1,4 @@
-from sqlalchemy import String, ForeignKey, Enum
+from sqlalchemy import String, ForeignKey, Enum, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 from app.core.database import Base
 import enum
@@ -25,3 +25,5 @@ class CategoryRule(Base):
         ForeignKey("accounts.id"),
         nullable=False
     )
+
+    priority: Mapped[int] = mapped_column(Integer, default=100)
