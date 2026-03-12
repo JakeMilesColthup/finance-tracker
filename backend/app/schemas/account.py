@@ -7,6 +7,7 @@ class AccountCreate(BaseModel):
     name: str
     type: AccountType
     subtype: Optional[str] = None
+    parent_id: Optional[int] = None
 
 
 class AccountRead(BaseModel):
